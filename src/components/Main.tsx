@@ -140,7 +140,7 @@ export function Main(): ReactElement {
         <ActionPanel>
           <Action.OpenInBrowser
             title="Open GitHub"
-            url="https://github.com/antfu/raycast-multi-translate"
+            url="https://github.com/wtser/raycast-multi-translate"
             icon={Icon.Code}
           />
         </ActionPanel>
