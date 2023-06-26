@@ -22,11 +22,16 @@ import { spellcheck } from "../logic/spellcheck";
 import { webDictionaries } from "../data/web-dictionaries";
 import { SpellcheckItem } from "./SpellcheckItem";
 import { TranslateDetail } from "./TranslateDetail";
+import { exec } from "child_process";
 
 const langReg = new RegExp(
   `[>:/](${Object.keys(languagesByCode).join("|")})$`,
   "i"
 );
+
+const speak = (text: string, lang: LanguageCode) => {
+  exec(`say ${lang === "ja" ? `-v Kyoko` : ``} ${text}`);
+};
 
 export function Main(): ReactElement {
   const langs = targetLanguages;
@@ -200,6 +205,21 @@ export function Main(): ReactElement {
                       icon={Icon.Book}
                     />
                   ))}
+                  <Action
+                    icon={Icon.SpeakerOn}
+                    title="Read Source Text"
+                    onAction={() => {
+                      speak(item.original, item.from);
+                    }}
+                    shortcut={{ modifiers: ["ctrl", "opt"], key: "s" }}
+                  ></Action>
+                  <Action
+                    icon={Icon.SpeakerOn}
+                    title="Read Translated Text"
+                    onAction={() => {
+                      speak(item.translated, item.to);
+                    }}
+                  ></Action>
                   <Action.OpenInBrowser
                     title="Open in Google Translate"
                     shortcut={{ modifiers: ["opt"], key: "enter" }}
